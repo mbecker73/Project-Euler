@@ -5,24 +5,21 @@
  */
 
 public class SummationOfPrimes {
-	
+
     public static void main(String[] args) {
     	System.out.println(sumOfPrimes(2000000));
     }
     
     public static long sumOfPrimes(long limit){
     	long sum=0;
-	
+
     	//create boolean array holding if number at index is prime or not
     	boolean[] primeArray = new boolean[(int) (limit + 1)];
     	for (int i = 2; i <= limit; i++) {
     		primeArray[i] = true; //init all as true
     	}
-    	
+    	//Sieve of Eratosthenes implementation
     	for (int i = 2; i*i <= limit; i++) {
-
-            // if i is prime, then mark multiples of i as nonprime
-            // suffices to consider mutiples i, i+1, ..., N/i
             if (primeArray[i]) {
                 for (int j = i; i*j <= limit; j++) {
                     primeArray[i*j] = false;
