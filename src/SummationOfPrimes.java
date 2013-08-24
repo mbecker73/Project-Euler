@@ -7,7 +7,7 @@
 public class SummationOfPrimes {
 
     public static void main(String[] args) {
-    	System.out.println(sumOfPrimes(2000000));
+    	System.out.println(sumOfPrimes(2000000)); //answer should be 142913828922
     }
     
     public static long sumOfPrimes(long limit){
@@ -20,7 +20,8 @@ public class SummationOfPrimes {
     	}
     	//Sieve of Eratosthenes implementation
     	for (int i = 2; i*i <= limit; i++) {
-            if (primeArray[i]) {
+            if (primeArray[i]) { //if the number is marked as a possible prime
+            	//mark every "i"th number as false (all multiples of i)
                 for (int j = i; i*j <= limit; j++) {
                     primeArray[i*j] = false;
                 }
