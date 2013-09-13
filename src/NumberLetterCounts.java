@@ -1,6 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  * Project Euler Problem 17
  *  If the numbers 1 to 5 are written out in words: one, two, three, four, five, then 
@@ -9,6 +6,9 @@ import java.util.Map;
  *  If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, 
  *  how many letters would be used?
  */
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NumberLetterCounts {
 	/*
@@ -51,7 +51,10 @@ public class NumberLetterCounts {
 		return map;
 	}
 	
-	//given an Integer, uses the appropriate function and map lookup to return it's written out String value
+	/*
+	 * Given an integer and HashMap, uses the appropriate function and map lookup to 
+	 * return it's written out String representation; only handles numbers less than 10000
+	 */
 	public static String convertNumberToWord(int number, Map<Integer, String> map){
 		if(number >=0 && number < 20){
 			return map.get(number);
@@ -70,53 +73,52 @@ public class NumberLetterCounts {
 			return null;
 		}
 	}
+	
 	/*
-	 * Given an integer between 20 <= n < 100, converts it to String
+	 * Given an integer between 20 <= n < 100, converts it to String representation
 	 */
 	public static String convertTens(int number, Map<Integer, String> map){
-		int tensDigit = (number / 10) * 10;
-	    int onesDigit = number % 10;
-	    String conversion = map.get(tensDigit);
-	    if(onesDigit > 0)
-	    	conversion += map.get(onesDigit);
-	    return conversion;
+		//break down the number into it's respective digits
+		int tens = (number/10)*10;
+	    int ones = number%10;
+	    
+	    if(ones > 0) //e.g. 73
+	    	return map.get(tens) + map.get(ones);
+	    else //e.g. 40
+	    	return map.get(tens);
 	}
+	
+	/*
+	 * Given an integer between 100 <= n < 1000, converts it to String representation
+	 */
 	public static String convertHundreds(int number, Map<Integer, String> map){
 		
+		//break down the number into it's respective digits
 		int hundreds = number/100;
 		int tens = ((number%100)/10)*10;
 		int ones = number %10;		
 
-		if(tens == 0 && ones ==0)
+		if(tens == 0 && ones ==0) //e.g. 100
 			return map.get(hundreds) + map.get(100);
-		else if(tens ==0)
+		else if(tens ==0) //e.g. 105
 			return map.get(hundreds) + map.get(100) + "and" + map.get(ones);
-		else if(ones ==0)
+		else if(ones ==0) //e.g. 140
 			return map.get(hundreds) + map.get(100) + "and" + map.get(tens);
-		else
-			return map.get(hundreds) + map.get(100) + "and" + map.get(tens) + map.get(ones);
+		else{ //if all digits are not zero
+			if((tens + ones)< 20) //if a number is less than 20, use inserted map value
+				return map.get(hundreds) + map.get(100) + "and" + map.get(tens+ones);
+			else
+				return map.get(hundreds) + map.get(100) + "and" + map.get(tens) + map.get(ones);
+		}
 	}
 	
+	/*
+	 * Problem only asks for numbers up to 1000, so this method is not fully implemented
+	 */
 	public static String convertThousands(int number, Map<Integer, String> map){
 		int thousands = number/1000;
-		int remainder = (number %1000);
-		//int tens =  ((number%100)/10)*10; 
-		//int ones =  number%10; 
-		//return map.get(thousands) + map.get(1000) + hundreds + " "+ tens +" "+ ones;
-		
-		/*
-		if(remainder == 0)
-			return map.get(thousands) + map.get(1000);
-		else{
-			int tens =  ((number%100)/10)*10;
-			int ones =  number%10; 
-			if(tens == 0 )
-				return map.get(thousands) + map.get(1000);
+		int remainder = number%1000;
 	
-			System.out.println(tens + " " + ones);
-			return map.get(thousands) + map.get(1000) +convertHundreds(remainder,map) ;
-
-		}*/
 		return map.get(thousands) + map.get(1000);
 
 	}
@@ -125,12 +127,13 @@ public class NumberLetterCounts {
 		Map<Integer, String> map = createMapLookup();
 		int sum = 0;
 		String temp = "";
-		for(int i=10; i <= 19; i++ ){
+		//loop to convert numbers to words, then finds sum of the strings lengths
+		for(int i=1; i <= 1000; i++ ){
 			temp = convertNumberToWord(i, map);
 			sum += temp.length();
 		}
 		System.out.println(sum);
-		System.out.println(convertThousands(1101, map));
 
 	}
+	
 }
