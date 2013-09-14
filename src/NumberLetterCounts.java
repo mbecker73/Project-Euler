@@ -126,13 +126,6 @@ public class NumberLetterCounts {
 			sum += temp.length();
 		}
 		System.out.println(sum);
-		System.out.println(convertHundreds(214, map));
-		System.out.println(convertHundreds(100, map));
-		System.out.println(convertHundreds(120, map));
-		System.out.println(convertHundreds(103, map));
-
-
-
 	}
 	
 }
