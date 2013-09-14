@@ -12,7 +12,7 @@ import java.math.BigInteger;
  */
 
 public class ThousandDigitFibonacci {
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		BigInteger[] fibonacci = new BigInteger[8000]; //use arbitrarily long array length
 		 
