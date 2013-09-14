@@ -14,23 +14,50 @@
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class NamesScore {
 	
 	public static void main(String[] args) throws Exception {
-		List<String> list = createListFromFile();
+		TreeSet<String> sortedNames = createSetFromFile("data/names.txt");
+		int count=1; //start index count of names at 1
+		int total=0; //total of all name scores
 		
+		for(String name: sortedNames){
+			total += count * calculateScore(name);
+			count++;
+		}
+		
+		System.out.println(total);
 	}
 	
-	public static List<String> createListFromFile() throws Exception{
-		List<String> list = new ArrayList<String>();
-		
-	    BufferedReader br = new BufferedReader(new FileReader("data/names.txt"));
-	    StringBuilder sb = new StringBuilder();
+	/**
+	 * Given a filename, creates a list containing names from the file
+	 * @param filename
+	 * @return List<String>
+	 * @throws Exception
+	 */
+	public static TreeSet<String> createSetFromFile(String filename) throws Exception{
+	    BufferedReader br = new BufferedReader(new FileReader(filename));
         String line = br.readLine();
-        System.out.println(line);
-		return list;
+        line = line.replace("\"", "");
+        List<String> names = Arrays.asList(line.split(","));
+        //returns TreeSet of names after removing quotes and splitting on commas
+		return new TreeSet<String>(names);
+	}
+	
+	/**
+	 * Given a String name calculates its integer score 
+	 * @param name
+	 * @return score integer value
+	 */
+	public static int calculateScore(String name){
+		int score = 0;
+		for (int i = 0; i < name.length(); i++)
+			//gets each character's ASCII value and subtracts 64 to get alphabet position
+		    score += (int)(name.charAt(i)) - 64;
+		return score;
 	}
 }
