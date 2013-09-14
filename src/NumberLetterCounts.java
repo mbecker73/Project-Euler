@@ -64,7 +64,6 @@ public class NumberLetterCounts {
 		}
 		else if(number >= 100 && number < 1000){
 			return convertHundreds(number, map);
-
 		}
 		else if(number >=1000 && number < 10000){
 			return convertThousands(number, map);
@@ -82,7 +81,9 @@ public class NumberLetterCounts {
 		int tens = (number/10)*10;
 	    int ones = number%10;
 	    
-	    if(ones > 0) //e.g. 73
+	    if(tens == 0) //e.g. 04
+			return map.get(ones);
+	    else if(ones > 0) //e.g. 73
 	    	return map.get(tens) + map.get(ones);
 	    else //e.g. 40
 	    	return map.get(tens);
@@ -92,35 +93,27 @@ public class NumberLetterCounts {
 	 * Given an integer between 100 <= n < 1000, converts it to String representation
 	 */
 	public static String convertHundreds(int number, Map<Integer, String> map){
-		
-		//break down the number into it's respective digits
-		int hundreds = number/100;
-		int tens = ((number%100)/10)*10;
-		int ones = number %10;		
-
-		if(tens == 0 && ones ==0) //e.g. 100
-			return map.get(hundreds) + map.get(100);
-		else if(tens ==0) //e.g. 105
-			return map.get(hundreds) + map.get(100) + "and" + map.get(ones);
-		else if(ones ==0) //e.g. 140
-			return map.get(hundreds) + map.get(100) + "and" + map.get(tens);
-		else{ //if all digits are not zero
-			if((tens + ones)< 20) //if a number is less than 20, use inserted map value
-				return map.get(hundreds) + map.get(100) + "and" + map.get(tens+ones);
-			else
-				return map.get(hundreds) + map.get(100) + "and" + map.get(tens) + map.get(ones);
+		if(number/100 == 0) //e.g. 034
+			return convertTens(number%100,map);
+		else{
+			if(number%100 == 0) //if tens and ones digit are both zero
+				return map.get(number/100) + map.get(100);
+			else if(number%100 <20) //if a number is less than 20, use inserted map value
+				return map.get(number/100) + map.get(100) + "and" + map.get(number%100);
+			else //if all digits are not zero
+				return map.get(number/100) + map.get(100) + "and" + convertTens(number%100,map);
 		}
 	}
 	
 	/*
-	 * Problem only asks for numbers up to 1000, so this method is not fully implemented
+	 * Given an integer between 1000 <= n < 10000, converts it to String representation
 	 */
 	public static String convertThousands(int number, Map<Integer, String> map){
-		int thousands = number/1000;
-		int remainder = number%1000;
-	
-		return map.get(thousands) + map.get(1000);
-
+		if(number%1000==0)
+			return map.get(number/1000) + map.get(1000);
+		else
+			return map.get(number/1000) + map.get(1000) + convertHundreds(number%1000, map);
+		
 	}
 	
 	public static void main(String[] args) {
@@ -133,6 +126,12 @@ public class NumberLetterCounts {
 			sum += temp.length();
 		}
 		System.out.println(sum);
+		System.out.println(convertHundreds(214, map));
+		System.out.println(convertHundreds(100, map));
+		System.out.println(convertHundreds(120, map));
+		System.out.println(convertHundreds(103, map));
+
+
 
 	}
 	
