@@ -12,16 +12,25 @@ import java.math.BigInteger;
 public class FactorialDigitSum {
 
 	public static void main(String[] args) throws Exception {
-		BigInteger n = factorial(BigInteger.valueOf(100));
-		String s = n.toString();
-		char[] array = s.toCharArray();
-		int sum = 0;
-		for(char c : array){
-			sum += Integer.parseInt(c +"");
-		}
-		System.out.println(sum);
+		System.out.println(factorialDigitSum(BigInteger.valueOf(100)));
 	}
 	
+	/**
+	 * Method to convert BigInteger value to a String, loop through all characters, adding 
+	 * them up as integers
+	 * @param BigInteger n
+	 * @return factorial digit sum integer
+	 */
+	public static int factorialDigitSum(BigInteger n){
+		BigInteger factorial = factorial(n);
+		//convert BigInteger to string
+		char[] factorialArray = factorial.toString().toCharArray();
+		int sum = 0;
+		for(char c : factorialArray){
+			sum += Integer.parseInt(String.valueOf(c));
+		}
+		return sum;
+	}
 	/**
 	 * Recursive method to calculate the factorial of a BigInteger
 	 * @param n
