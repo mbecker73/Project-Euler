@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 /*
  * Project Euler Problem 15
  * Starting in the top left corner of a 2x2 grid, and only being able to move to the right and 
@@ -7,6 +5,8 @@ import java.math.BigInteger;
  * 
  * How many such routes are there through a 20x20 grid?
  */
+
+import java.math.BigInteger;
 
 public class LatticePaths {
 
@@ -32,7 +32,7 @@ public class LatticePaths {
 	/**
 	 * Recursive method to calculate the factorial of a BigInteger
 	 * @param n
-	 * @return
+	 * @return factorial of n
 	 */
 	public static BigInteger factorial(BigInteger n){
 		if(n.intValue() <=1)
