@@ -28,16 +28,16 @@ public class MaxPathSum2 {
 		double start = System.currentTimeMillis();
 		
 		int[][] triangle = createIntegerMatrix("data/triangle.txt");
+		System.out.println(maxPathSum(triangle));
+
 
 		System.out.println(System.currentTimeMillis() -start +"ms");
 		
 	}
 	
-	/**
-	 * Create integer matrix from text file of integers
-	 * @param filename
-	 * @return int[][] triangle
-	 * @throws IOException
+	/*
+	 * Create integer matrix from filename of integers. Size of matrix determined from number
+	 * of rows in the text file and column size set to row number incremented by 1
 	 */
 	public static int[][] createIntegerMatrix(String filename) throws IOException{
 		
@@ -46,12 +46,13 @@ public class MaxPathSum2 {
 		lnr.skip(Long.MAX_VALUE);
 		int size = lnr.getLineNumber();
 		
-		int[][] triangle = new int[size][size];
+		int[][] triangle = new int[size][]; //define column length dynamically
 		BufferedReader br = new BufferedReader(new FileReader(filename));
 		
 		String line = "";
 		int i =0, j = 0;
 		while (( line = br.readLine()) != null) {
+			triangle[i] = new int[i+1]; //add new array of length i+1 in each row of matrix
 			String[] numStringArray = line.split(" ");
 			for(String num : numStringArray){
 				triangle[i][j++] = Integer.parseInt(num);
