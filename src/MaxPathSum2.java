@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.Scanner;
+
 /*
  * Project Euler Problem 67
  * 
@@ -16,40 +23,46 @@
  */
 
 public class MaxPathSum2 {
-
-	public static int[][] triangle ={{75},
-									 {95, 64},
-									 {17, 47, 82},
-									 {18, 35, 87, 10},
-									 {20,  4, 82, 47, 65},
-									 {19,  1, 23, 75,  3, 34},
-									 {88,  2, 77, 73,  7, 63, 67},
-									 {99, 65,  4, 28,  6, 16, 70, 92},
-									 {41, 41, 26, 56, 83, 40, 80, 70, 33},
-									 {41, 48, 72, 33, 47, 32, 37, 16, 94, 29},
-									 {53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14},
-									 {70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57},
-									 {91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48},
-									 {63, 66,  4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
-									 { 4, 62, 98, 27, 23,  9, 70, 98, 73, 93, 38, 53, 60,  4, 23} };
 	
 	public static void main(String[] args) throws Exception {
 		double start = System.currentTimeMillis();
 		
-		
-		System.out.println(maxPathSum(triangle));
-		
-		
+		int[][] triangle = createIntegerMatrix("data/triangle.txt");
+
 		System.out.println(System.currentTimeMillis() -start +"ms");
 		
 	}
 	
-	public static int[][] createIntegerMatrix(String filename){
-		int[][] triangle = new int[100][100];
+	/**
+	 * Create integer matrix from text file of integers
+	 * @param filename
+	 * @return int[][] triangle
+	 * @throws IOException
+	 */
+	public static int[][] createIntegerMatrix(String filename) throws IOException{
 		
+		//get number of rows in text file (given in problem but implemented for possible filename change)
+		LineNumberReader  lnr = new LineNumberReader(new FileReader(new File(filename)));
+		lnr.skip(Long.MAX_VALUE);
+		int size = lnr.getLineNumber();
+		
+		int[][] triangle = new int[size][size];
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		
+		String line = "";
+		int i =0, j = 0;
+		while (( line = br.readLine()) != null) {
+			String[] numStringArray = line.split(" ");
+			for(String num : numStringArray){
+				triangle[i][j++] = Integer.parseInt(num);
+			}
+			i++;
+			j=0;
+		}
+        
 		return triangle;
-		
 	}
+	
 	/*
 	 * Method to find the maximum path sum of a given integer matrix.  Using dynamic programming, 
 	 * the algorithm works its way up the triangle, creating a smaller and smaller triangle each 
