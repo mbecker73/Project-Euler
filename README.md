@@ -6,8 +6,8 @@ My solutions to problems from Project Euler written in Java
 Project Euler: http://projecteuler.net/problems
 
 Progress:
-Solved 18 out of 437 problems
+Solved 22 out of 437 problems
 
 Problems Solved:
-1 - 10, 11, 13, 14, 15, 16, 17, 18, 20, 22, 25, 67
+1 - 11, 13 - 20, 22, 25, 67
 
