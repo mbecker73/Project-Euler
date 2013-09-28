@@ -9,5 +9,5 @@ Progress:
 Solved 18 out of 437 problems
 
 Problems Solved:
-1 - 10, 11, 13, 15, 16, 17, 18, 20, 22, 25, 67
+1 - 10, 11, 13, 14, 15, 16, 17, 18, 20, 22, 25, 67
 
