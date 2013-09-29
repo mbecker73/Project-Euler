@@ -20,9 +20,35 @@
 public class DivisibleTriangularNumber {
 	public static void main(String[] args) {
 		double start = System.currentTimeMillis();
-		
+
+		int i = 1;
+		int number = 0;
+		//find first number with over 500 divisors
+		while(findNumberOfFactors(number) < 500){
+			number+= i; //only need triangle numbers
+			i++;
+		}
+		System.out.println(number);
 		
 		System.out.println(System.currentTimeMillis() -start +"ms");
+	}
+	
+	/**
+	 * Given an integer, finds the number of factors for it.
+	 * @param number
+	 * @return integer count of number of factors
+	 */
+	public static int findNumberOfFactors(int number) {		
+		 int factorCount = 0;
+		 
+		 //only need to test up to square root of the number
+		 for(int i=1; i<= Math.sqrt(number); i++){
+			 if(number % i == 0){
+				 factorCount += 2; //for i and the number itself
+		     }
+		 }
+		 
+		 return factorCount;
 	}
 
 }
